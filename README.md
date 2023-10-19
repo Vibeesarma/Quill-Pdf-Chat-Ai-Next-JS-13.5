@@ -44,6 +44,15 @@ import {RegisterLink, LoginLink} from "@kinde-oss/kinde-auth-nextjs/server";
 
 ```
 
+## TRPC
+
+- [TRPC](https://trpc.io/docs/client/nextjs/setup) is help you add type safe for front and backend.
+- when you setup you install some dependencies ```npm install @trpc/server @trpc/client @trpc/react-query @trpc/next @tanstack/react-query zod``` 
+-
+
+
+
+
 
 
 > Thanks for [Josh tried coding](https://www.youtube.com/@joshtriedcoding).
