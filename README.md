@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Quill Pdf Reader AI in Next.js 13.5.3
 
-## Getting Started
+![image](https://github.com/Vibeesarma/Breadit-Clone-Next-JS-13.4/assets/77588716/7768f1a2-0a18-4784-b628-73ed637bde89)
 
-First, run the development server:
+> This project get from [Josh tried coding](https://www.youtube.com/@joshtriedcoding) YouTube channel
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+> Project Link [Build a Complete SaaS Platform with Next.js 13, React, Prisma, tRPC, Tailwind | Full Course 2023](https://youtu.be/ucX2zXAZ1I0?si=I_OUkHO6cwixcq1a)
+
+## Lucide
+
+- [Lucide](https://lucide.dev/) is an icon library used for shadcn/ui.
+
+## shadcn/ui
+
+- [shadcn](https://ui.shadcn.com/) is designed components that you can copy and paste into your apps.
+- you can also install components using `npx` command.
+
+
+## Kinde
+
+- [Kinde](https://kinde.com/) is a platform use for login and signup
+- Just create a account and choose the platform that you use for this project and install the dependence `npm i @kinde-oss/kinde-auth-nextjs`
+- copy the env past it your env file
+- create end api end point on `src/app/api/auth/[kindeAuth]/route.js`
+
+```typescript
+import { handleAuth } from "@kinde-oss/kinde-auth-nextjs/server";
+
+export async function GET(request, { params }) {
+  const endpoint = params.kindeAuth;
+  return handleAuth(request, endpoint);
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Just add a button like below it will handle other things.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```typescript
+import {RegisterLink, LoginLink} from "@kinde-oss/kinde-auth-nextjs/server";
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<LoginLink>Sign in</LoginLink>
 
-## Learn More
+<RegisterLink>Sign up</RegisterLink>
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+> Thanks for [Josh tried coding](https://www.youtube.com/@joshtriedcoding).
