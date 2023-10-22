@@ -1,7 +1,5 @@
 # Quill Pdf Reader AI in Next.js 13.5.3
 
-![image](https://github.com/Vibeesarma/Breadit-Clone-Next-JS-13.4/assets/77588716/7768f1a2-0a18-4784-b628-73ed637bde89)
-
 > This project get from [Josh tried coding](https://www.youtube.com/@joshtriedcoding) YouTube channel
 
 > Project Link [Build a Complete SaaS Platform with Next.js 13, React, Prisma, tRPC, Tailwind | Full Course 2023](https://youtu.be/ucX2zXAZ1I0?si=I_OUkHO6cwixcq1a)
@@ -76,7 +74,16 @@ export default Providers;
 ```
 
 - create folder call trpc and add configuration.
-- note: please check the version of trpc on documentation.
+
+> [!IMPORTANT] 
+> please check the version of trpc on documentation.
+
+
+## Prisma 
+
+- intial setup for prisma using `npx prisma init` this will create a basic setup it your project
+  - create prisma folder
+  - add database url to env
 
 
 
