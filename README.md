@@ -13,7 +13,6 @@
 - [shadcn](https://ui.shadcn.com/) is designed components that you can copy and paste into your apps.
 - you can also install components using `npx` command.
 
-
 ## Kinde
 
 - [Kinde](https://kinde.com/) is a platform use for login and signup
@@ -45,8 +44,8 @@ import {RegisterLink, LoginLink} from "@kinde-oss/kinde-auth-nextjs/server";
 ## TRPC
 
 - [TRPC](https://trpc.io/docs/client/nextjs/setup) is help you add type safe for front and backend.
-- when you setup you install some dependencies ```npm install @trpc/server @trpc/client @trpc/react-query @trpc/next @tanstack/react-query zod``` 
-- Create provider file add it to ```layout.tsx```
+- when you setup you install some dependencies `npm install @trpc/server @trpc/client @trpc/react-query @trpc/next @tanstack/react-query zod`
+- Create provider file add it to `layout.tsx`
 
 ```typescript
 "use client";
@@ -75,19 +74,40 @@ export default Providers;
 
 - create folder call trpc and add configuration.
 
-> [!IMPORTANT] 
+> [!IMPORTANT]
 > please check the version of trpc on documentation.
 
-
-## Prisma 
+## Prisma
 
 - intial setup for prisma using `npx prisma init` this will create a basic setup it your project
+
   - create prisma folder
   - add database url to env
 
 - In here i used [neon.tech](https://neon.tech/) for Database
 
 - Then add database model to `schema.prisma` file,then run `npx prisma db push` command for sync your database and run `npx prisma generate` for add type data.
+
+- Create a folder call db and add prisma db client.
+
+```typescript
+import { PrismaClient } from "@prisma/client";
+declare global {
+  // eslint-disable-next-line no-var
+  var cachedPrisma: PrismaClient;
+}
+let prisma: PrismaClient;
+if (process.env.NODE_ENV === "production") {
+  prisma = new PrismaClient();
+} else {
+  if (!global.cachedPrisma) {
+    global.cachedPrisma = new PrismaClient();
+  }
+  prisma = global.cachedPrisma;
+}
+
+export const db = prisma;
+```
 
 
 
