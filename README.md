@@ -85,6 +85,9 @@ export default Providers;
   - create prisma folder
   - add database url to env
 
+- In here i used [neon.tech](https://neon.tech/) for Database
+
+- Then add database model to `schema.prisma` file,then run `npx prisma db push` command for sync your database and run `npx prisma generate` for add type data.
 
 
 
