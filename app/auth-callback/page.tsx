@@ -11,17 +11,15 @@ const AuthCallback = () => {
   const searchParams = useSearchParams();
   const orgin = searchParams.get("origin");
 
-  // TODO: check type error
   trpc.authCallback.useQuery(undefined, {
-    // @ts-ignore
     onSuccess: ({ success }) => {
       if (success) {
         // user sync to database
         router.push(orgin ? `/${orgin}` : "/dashboard");
       }
     },
-    // @ts-ignore
-    onError: (err: { data: { code: string } }) => {
+
+    onError: (err) => {
       if (err.data?.code === "UNAUTHORIZED") {
         router.push("/sign-in");
       }
