@@ -74,6 +74,83 @@ export default Providers;
 
 - create folder call trpc and add configuration.
 
+- trpc qive protected api using middleware the below is example for add it
+
+```typescript
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { TRPCError, initTRPC } from "@trpc/server";
+
+const t = initTRPC.create();
+const middleware = t.middleware;
+
+// This middle used for query data for authenticated user
+const isAuth = middleware(async (opts) => {
+  const { getUser } = getKindeServerSession();
+
+  const user = getUser();
+  if (!user || !user.id) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  return opts.next({
+    ctx: {
+      userId: user.id,
+      user,
+    },
+  });
+});
+
+export const router = t.router;
+export const publicProcedure = t.procedure;
+export const privateProcedure = t.procedure.use(isAuth);
+```
+
+- below like you can use public queires and protected queires
+
+```typescript
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { privateProcedure, publicProcedure, router } from "./trpc";
+import { TRPCError } from "@trpc/server";
+import { db } from "@/db";
+export const appRouter = router({
+  authCallback: publicProcedure.query(async () => {
+    const { getUser } = getKindeServerSession();
+    const user = getUser();
+
+    if (!user.id || !user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    // check if the user is in the database
+    const dbUser = await db.user.findFirst({ where: { id: user.id } });
+
+    if (!dbUser) {
+      // create user in db
+      await db.user.create({
+        data: {
+          id: user.id,
+          email: user.email,
+        },
+      });
+    }
+
+    return { success: true };
+  }),
+
+  getUserFiles: privateProcedure.query(async ({ ctx }) => {
+    const { userId } = ctx;
+
+    return await db.file.findMany({
+      where: {
+        userId,
+      },
+    });
+  }),
+});
+
+export type AppRouter = typeof appRouter;
+```
+
+- every queries and mution added to separt file maintainable code
+
 > [!IMPORTANT]
 > please check the version of trpc on documentation.
 
@@ -108,7 +185,5 @@ if (process.env.NODE_ENV === "production") {
 
 export const db = prisma;
 ```
-
-
 
 > Thanks for [Josh tried coding](https://www.youtube.com/@joshtriedcoding).
