@@ -154,6 +154,25 @@ export type AppRouter = typeof appRouter;
 > [!IMPORTANT]
 > please check the version of trpc on documentation.
 
+- the mutation have some properties called onsucess,onerror and etc these are very use full when control the page fuctionality.
+
+```typescript
+const { mutate: deleteFile } = trpc.deleteFile.useMutation({
+  // This will run onsucess
+  onSuccess: () => {
+    utils.getUserFiles.invalidate();
+  },
+  // this will run when run the query
+  onMutate: ({ id }) => {
+    setCurrentlyDeletingFile(id);
+  },
+  // success or fail this will run after the completion
+  onSettled: () => {
+    setCurrentlyDeletingFile(null);
+  },
+});
+```
+
 ## Prisma
 
 - intial setup for prisma using `npx prisma init` this will create a basic setup it your project
