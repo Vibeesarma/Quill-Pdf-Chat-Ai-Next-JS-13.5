@@ -205,4 +205,13 @@ if (process.env.NODE_ENV === "production") {
 export const db = prisma;
 ```
 
+
+## css
+
+- grow - Use grow to allow a flex item to grow to fill any available space.
+- flex-[0.75] - this dynamic value like flex-1
+
+
+
+
 > Thanks for [Josh tried coding](https://www.youtube.com/@joshtriedcoding).
