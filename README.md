@@ -173,6 +173,19 @@ const { mutate: deleteFile } = trpc.deleteFile.useMutation({
 });
 ```
 
+- Coolthing about trpc mutation it have some properties like `retry` and `retryDelay` this is very help full thing if you want run your mutation or query unitill get success.
+
+```typescript
+const { mutate: startPolling } = trpc.getFile.useMutation({
+  onSuccess: (file) => {
+    router.push(`/dashboard/${file.id}`);
+  },
+  //NOTE:This is a good one for trpc if we want until rerun this api get success
+  retry: true,
+  retryDelay: 500,
+});
+```
+
 ## Prisma
 
 - intial setup for prisma using `npx prisma init` this will create a basic setup it your project
@@ -291,6 +304,11 @@ const UploadDropzone = () => {
 ## React Pdf
 
 - [react pdf](https://react-pdf.org/) is great package show pdf file.
+
+## UploadThing
+
+- [UploadThing](https://uploadthing.com/) is the easiest way to add file uploads to your full-stack TypeScript application
+- This is also similar to S3 but it takes a low amount of time setup.
 
 ## css
 
