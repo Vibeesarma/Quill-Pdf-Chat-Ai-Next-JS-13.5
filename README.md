@@ -329,6 +329,10 @@ import "react-pdf/dist/Page/TextLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 ```
 
+## React Resize Detector
+
+- [react-resize-detector](https://www.npmjs.com/package/react-resize-detector) is helps for width automatically increse decrese in pdf view port check it in the code for better unstanding.
+
 ## UploadThing
 
 - [UploadThing](https://uploadthing.com/) is the easiest way to add file uploads to your full-stack TypeScript application
