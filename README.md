@@ -304,6 +304,30 @@ const UploadDropzone = () => {
 ## React Pdf
 
 - [react pdf](https://react-pdf.org/) is great package show pdf file.
+- also read this npm packge [link]() because if this package is want some configuration in `next.config.js` for run and also you want to import some css file like below one,
+
+```typescript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  webpack: (
+    config,
+    { buildId, dev, isServer, defaultLoaders, thiswebpack }
+  ) => {
+    config.resolve.alias.canvas = false;
+    config.resolve.alias.encoding = false;
+    return config;
+  },
+};
+
+module.exports = nextConfig;
+```
+
+```typescript
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import "react-pdf/dist/Page/TextLayer.css";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+```
 
 ## UploadThing
 
