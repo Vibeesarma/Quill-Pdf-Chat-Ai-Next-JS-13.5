@@ -352,7 +352,11 @@ import "simplebar-react/dist/simplebar.min.css";
 - [React hook form](https://react-hook-form.com/) is used for handling form values and errors.
 - If you want to add validation with Zod or another package like yup you should install `yarn add @hookform/resolvers` with this package.
 
-## css
+## React Textarea Auto Resize
+
+- [react textarea resize](https://www.npmjs.com/package/react-textarea-autosize) is used for auto resize the textarea input in here we used this one to `shadcn` textarea file.
+
+## CSS
 
 - grow - Use grow to allow a flex item to grow to fill any available space.
 - flex-[0.75] - this dynamic value like flex-1
