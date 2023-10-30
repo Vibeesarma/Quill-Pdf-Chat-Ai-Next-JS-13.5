@@ -149,12 +149,12 @@ export const appRouter = router({
 export type AppRouter = typeof appRouter;
 ```
 
-- every queries and mution added to separt file maintainable code
+- every queries and mutation added to separt file maintainable code
 
 > [!IMPORTANT]
 > please check the version of trpc on documentation.
 
-- the mutation have some properties called onsucess,onerror and etc these are very use full when control the page fuctionality.
+- the mutation have some properties called onsucess,onerror and etc these are very use full when control the page functionality.
 
 ```typescript
 const { mutate: deleteFile } = trpc.deleteFile.useMutation({
@@ -173,7 +173,7 @@ const { mutate: deleteFile } = trpc.deleteFile.useMutation({
 });
 ```
 
-- Coolthing about trpc mutation it have some properties like `retry` and `retryDelay` this is very help full thing if you want run your mutation or query unitill get success.
+- Cool thing about trpc mutation it have some properties like `retry` and `retryDelay` this is very help full thing if you want run your mutation or query until get success.
 
 ```typescript
 const { mutate: startPolling } = trpc.getFile.useMutation({
@@ -188,7 +188,7 @@ const { mutate: startPolling } = trpc.getFile.useMutation({
 
 ## Prisma
 
-- intial setup for prisma using `npx prisma init` this will create a basic setup it your project
+- initial setup for prisma using `npx prisma init` this will create a basic setup it your project
 
   - create prisma folder
   - add database url to env
@@ -220,7 +220,7 @@ export const db = prisma;
 
 ## React Drop Zone
 
--[react drop zone](https://react-dropzone.js.org/) is liberary use for file drop in easy to like below one.
+-[react drop zone](https://react-dropzone.js.org/) is library use for file drop in easy to like below one.
 
 ```typescript
 const UploadDropzone = () => {
@@ -304,7 +304,7 @@ const UploadDropzone = () => {
 ## React Pdf
 
 - [react pdf](https://react-pdf.org/) is great package show pdf file.
-- also read this npm packge [link]() because if this package is want some configuration in `next.config.js` for run and also you want to import some css file like below one,
+- also read this npm package [link]() because if this package is want some configuration in `next.config.js` for run and also you want to import some css file like below one,
 
 ```typescript
 /** @type {import('next').NextConfig} */
@@ -331,12 +331,26 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 ## React Resize Detector
 
-- [react-resize-detector](https://www.npmjs.com/package/react-resize-detector) is helps for width automatically increse decrese in pdf view port check it in the code for better unstanding.
+- [react-resize-detector](https://www.npmjs.com/package/react-resize-detector) is helps for width automatically increase or decrease in pdf view port check it in the code for better understanding.
+
+## React SimpleBar
+
+-[react-simplebar](https://www.npmjs.com/package/simplebar-react) is package use for control the size of pdf container
+-If you want to use this you must import css to layout.
+
+```typescript
+import "simplebar-react/dist/simplebar.min.css";
+```
 
 ## UploadThing
 
 - [UploadThing](https://uploadthing.com/) is the easiest way to add file uploads to your full-stack TypeScript application
 - This is also similar to S3 but it takes a low amount of time setup.
+
+## React Hook Form
+
+- [React hook form](https://react-hook-form.com/) is used for handling form values and errors.
+- If you want to add validation with Zod or another package like yup you should install `yarn add @hookform/resolvers` with this package.
 
 ## css
 
