@@ -491,6 +491,28 @@ const stream = OpenAIStream(response, {
 return new StreamingTextResponse(stream);
 ```
 
+## Mantine Hook
+
+- [Mantine](https://mantine.dev/) is used to create infinity-scrolling intersections.
+- Create like the one below,
+
+```typescript
+const lastMessageRef = useRef<HTMLDivElement>(null);
+
+const { ref, entry } = useIntersection({
+  root: lastMessageRef.current,
+  threshold: 1,
+});
+
+useEffect(() => {
+  if (entry?.isIntersecting) {
+    fetchNextPage();
+  }
+}, [entry, fetchNextPage]);
+```
+
+- it will fetch the previous message when you scroll above.
+
 ## CSS
 
 - grow - Use grow to allow a flex item to grow to fill any available space.
