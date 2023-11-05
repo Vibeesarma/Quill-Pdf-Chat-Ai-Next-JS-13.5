@@ -354,12 +354,147 @@ import "simplebar-react/dist/simplebar.min.css";
 
 ## React Textarea Auto Resize
 
-- [react textarea resize](https://www.npmjs.com/package/react-textarea-autosize) is used for auto resize the textarea input in here we used this one to `shadcn` textarea file.
+- [react textarea resize](https://www.npmjs.com/package/react-textarea-autosize) is used for auto resize the textarea input here we used this one to `shadcn` textarea file.
+
+## Pinecone
+
+- [pinecone](https://www.pinecone.io/) is a Long-Term Memory for AI, this is a vector database.
+- A vector database is a type of database that indexes and stores vector embeddings for fast retrieval and similarity search, with capabilities like CRUD operations, metadata filtering, and horizontal scaling.
+
+- when you create a Pinecone account you get api key for Pinecone database access.
+
+- you just create an instance for pinecone like below in enough for use it.
+
+```typescript
+import { Pinecone } from "@pinecone-database/pinecone";
+
+export const pinecone = new Pinecone({
+  apiKey: process.env.PINECONE_API_KEY!,
+  environment: "gcp-starter",
+});
+```
+
+## LangChain
+
+- [langchain](https://www.langchain.com/) is a framework for developing applications powered by language models.
+
+- also you want to install one dependency with langchain `pnpm install pdf-parse` .
+
+- this is a code you use PDF Loader and OpenAIEmbeddings from langchain,
+
+```typescript
+const response = await fetch(
+  `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`
+);
+
+const blob = await response.blob();
+const loader = new PDFLoader(blob);
+
+const pageLevelDocs = await loader.load();
+const pagesAmt = pageLevelDocs.length;
+
+// vectorized and index entire document
+const pineconeIndex = pinecone.Index("quillpdfchatyt");
+
+const embeddings = new OpenAIEmbeddings({
+  openAIApiKey: process.env.OPEN_AI_KEY,
+});
+
+// NOTE:the name space properties does not supported for free tier
+await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
+  pineconeIndex,
+  // namespace: createdFile.id,
+});
+```
+
+- after asking a question we want to find a page for an answer,(this is in the api folder)
+
+```typescript
+const embeddings = new OpenAIEmbeddings({
+  openAIApiKey: process.env.OPEN_AI_KEY,
+});
+
+const pineconeIndex = pinecone.Index("quillpdfchatyt");
+
+const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+  pineconeIndex,
+});
+
+const results = await vectorStore.similaritySearch(message, 4);
+```
+
+- after that you get vector data for that page we want to answer the question using ai so we pass our previous messages and vector for that page to `openai` to answer the following question. so in this purpose we want install some packages `pnpm install openai` for chat with ai and `pnpm install ai` for stream the chat.
+
+```typescript
+const results = await vectorStore.similaritySearch(message, 4);
+
+const prevMessage = await db.message.findMany({
+  where: {
+    fileId,
+  },
+  orderBy: {
+    createdAt: "desc",
+  },
+  take: 6,
+});
+
+const formattedPrevMessages = prevMessage.map((msg) => ({
+  role: msg.isUserMessage ? ("user" as const) : ("assistant" as const),
+  content: msg.text,
+}));
+
+const response = await openai.chat.completions.create({
+  model: "gpt-3.5-turbo",
+  temperature: 0,
+  stream: true,
+  messages: [
+    {
+      role: "system",
+      content:
+        "Use the following pieces of context (or previous conversaton if needed) to answer the users question in markdown format.",
+    },
+    {
+      role: "user",
+      content: `Use the following pieces of context (or previous conversaton if needed) to answer the users question in markdown format. \nIf you don't know the answer, just say that you don't know, don't try to make up an answer.
+          
+    \n----------------\n
+    
+    PREVIOUS CONVERSATION:
+    ${formattedPrevMessages.map((message) => {
+      if (message.role === "user") return `User: ${message.content}\n`;
+      return `Assistant: ${message.content}\n`;
+    })}
+    
+    \n----------------\n
+    
+    CONTEXT:
+    ${results.map((r) => r.pageContent).join("\n\n")}
+    
+    USER INPUT: ${message}`,
+    },
+  ],
+});
+
+const stream = OpenAIStream(response, {
+  onCompletion: async (completion) => {
+    await db.message.create({
+      data: {
+        text: completion,
+        isUserMessage: false,
+        fileId,
+        userId,
+      },
+    });
+  },
+});
+
+return new StreamingTextResponse(stream);
+```
 
 ## CSS
 
 - grow - Use grow to allow a flex item to grow to fill any available space.
 - flex-[0.75] - this dynamic value like flex-1
-- place-items-center - to place grid items on the center of their grid areas on both axes.
+- place-items-center - to place grid items in the center of their grid areas on both axes.
 
 > Thanks for [Josh tried coding](https://www.youtube.com/@joshtriedcoding).

@@ -1,6 +1,10 @@
 import { db } from "@/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
+import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { PineconeStore } from "langchain/vectorstores/pinecone";
+import { pinecone } from "@/lib/pinecone";
 
 const f = createUploadthing();
 
@@ -35,6 +39,53 @@ export const ourFileRouter = {
       });
 
       console.log("file url", file.url);
+
+      try {
+        const response = await fetch(
+          `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`
+        );
+
+        const blob = await response.blob();
+        const loader = new PDFLoader(blob);
+
+        const pageLevelDocs = await loader.load();
+        const pagesAmt = pageLevelDocs.length;
+
+        // vectorized and index entire document
+        const pineconeIndex = pinecone.Index("quillpdfchatyt");
+
+        const embeddings = new OpenAIEmbeddings({
+          openAIApiKey: process.env.OPEN_AI_KEY,
+        });
+
+        // NOTE:the name space properties does not supported for free tier
+        await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
+          pineconeIndex,
+          // namespace: createdFile.id,
+        });
+
+        await db.file.update({
+          where: {
+            id: createdFile.id,
+          },
+          data: {
+            uploadStatus: "SUCCESS",
+          },
+        });
+      } catch (error) {
+        console.log(
+          "🚀 ~ file: core.ts:76 ~ .onUploadComplete ~ error:",
+          error
+        );
+        await db.file.update({
+          where: {
+            id: createdFile.id,
+          },
+          data: {
+            uploadStatus: "FAILED",
+          },
+        });
+      }
     }),
 } satisfies FileRouter;
 
