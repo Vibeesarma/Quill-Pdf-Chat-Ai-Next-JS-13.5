@@ -15,10 +15,10 @@
 
 ## Kinde
 
-- [Kinde](https://kinde.com/) is a platform use for login and signup
-- Just create a account and choose the platform that you use for this project and install the dependence `npm i @kinde-oss/kinde-auth-nextjs`
+- [Kinde](https://kinde.com/) is a platform used for login and signup
+- Just create an account choose the platform that you use for this project and install the dependence `npm i @kinde-oss/kinde-auth-nextjs`
 - copy the env past it your env file
-- create end api end point on `src/app/api/auth/[kindeAuth]/route.js`
+- create end API endpoint on `src/app/api/auth/[kindeAuth]/route.js`
 
 ```typescript
 import { handleAuth } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -43,9 +43,9 @@ import {RegisterLink, LoginLink} from "@kinde-oss/kinde-auth-nextjs/server";
 
 ## TRPC
 
-- [TRPC](https://trpc.io/docs/client/nextjs/setup) is help you add type safe for front and backend.
+- [TRPC](https://trpc.io/docs/client/nextjs/setup) helps you add type-safe for the frontend and backend.
 - when you setup you install some dependencies `npm install @trpc/server @trpc/client @trpc/react-query @trpc/next @tanstack/react-query zod`
-- Create provider file add it to `layout.tsx`
+- Create a provider file and add it to `layout.tsx`
 
 ```typescript
 "use client";
@@ -74,7 +74,7 @@ export default Providers;
 
 - create folder call trpc and add configuration.
 
-- trpc qive protected api using middleware the below is example for add it
+- trpc gives protected API using middleware below is example of adding it
 
 ```typescript
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -149,12 +149,12 @@ export const appRouter = router({
 export type AppRouter = typeof appRouter;
 ```
 
-- every queries and mutation added to separt file maintainable code
+- every query and mutation added to separate file maintainable code
 
 > [!IMPORTANT]
 > please check the version of trpc on documentation.
 
-- the mutation have some properties called onsucess,onerror and etc these are very use full when control the page functionality.
+- the mutation has some properties called onsucess,onerror etc these are very useful when controlling the page functionality.
 
 ```typescript
 const { mutate: deleteFile } = trpc.deleteFile.useMutation({
@@ -173,7 +173,7 @@ const { mutate: deleteFile } = trpc.deleteFile.useMutation({
 });
 ```
 
-- Cool thing about trpc mutation it have some properties like `retry` and `retryDelay` this is very help full thing if you want run your mutation or query until get success.
+- cool thing about trpc mutation it has some properties like `retry` and `retryDelay` this is a very helpful thing if you want to run your mutation or query until get success.
 
 ```typescript
 const { mutate: startPolling } = trpc.getFile.useMutation({
@@ -188,16 +188,16 @@ const { mutate: startPolling } = trpc.getFile.useMutation({
 
 ## Prisma
 
-- initial setup for prisma using `npx prisma init` this will create a basic setup it your project
+- initial setup for prisma using `npx prisma init` This will create a basic setup for your project.
 
   - create prisma folder
-  - add database url to env
+  - add database URL to env.
 
-- In here i used [neon.tech](https://neon.tech/) for Database
+- here I used [neon.tech](https://neon.tech/) for Database.
 
-- Then add database model to `schema.prisma` file,then run `npx prisma db push` command for sync your database and run `npx prisma generate` for add type data.
+- Then add the database model to `schema.prisma` file,then run `npx prisma db push` command to sync your database and run `npx prisma generate` to add type data.
 
-- Create a folder call db and add prisma db client.
+- Create a folder called db and add the Prisma db client.
 
 ```typescript
 import { PrismaClient } from "@prisma/client";
