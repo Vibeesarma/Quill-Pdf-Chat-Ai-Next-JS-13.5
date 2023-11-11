@@ -80,6 +80,7 @@ export const appRouter = router({
           quantity: 1,
         },
       ],
+      // this data get from session in stripe anyware in here api/webhook/stripe route
       metadata: {
         userId: userId,
       },
