@@ -513,6 +513,64 @@ useEffect(() => {
 
 - it will fetch the previous message when you scroll above.
 
+## Stripe
+
+- install the stripe package to use this feature and create a stripe account.
+- create a new product name called a pro plan for subscription.
+- Get the price ID from the stripe dashboard and create a checkout flow.
+
+```typescript
+
+  createStripeSession: privateProcedure.mutation(async ({ ctx }) => {
+    const { userId } = ctx;
+
+    const billingurl = absoluteUrl("/dashboard/billing");
+
+    if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    const dbUser = await db.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!dbUser) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    const subscriptionPlan = await getUserSubscriptionPlan();
+
+    if (subscriptionPlan.isSubscribed && dbUser.stripeCustomerId) {
+      const stripeSession = await stripe.billingPortal.sessions.create({
+        customer: dbUser.stripeCustomerId,
+        return_url: billingurl,
+      });
+
+      return { url: stripeSession.url };
+    }
+
+    const stripeSession = await stripe.checkout.sessions.create({
+      success_url: billingurl,
+      cancel_url: billingurl,
+      payment_method_types: ["card", "paypal"],
+      mode: "subscription",
+      billing_address_collection: "auto",
+
+      line_items: [
+        {
+          price: PLANS.find((plan) => plan.name === "Pro")?.price.priceIds.test,
+          quantity: 1,
+        },
+      ],
+      metadata: {
+        userId: userId,
+      },
+    });
+
+    return { url: stripeSession.url };
+  }),
+
+
+```
+
 ## CSS
 
 - grow - Use grow to allow a flex item to grow to fill any available space.
