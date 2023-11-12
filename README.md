@@ -1,4 +1,5 @@
 # Quill Pdf Reader AI in Next.js 13.5.3
+![Screenshot 2023-11-12 085547](https://github.com/Vibeesarma/Quill-Pdf-Chat-Ai-Next-JS-13.5/assets/77588716/852d43d4-6605-4df9-b826-2db1244f1d6d)
 
 > This project get from [Josh tried coding](https://www.youtube.com/@joshtriedcoding) YouTube channel
 
@@ -29,7 +30,7 @@ export async function GET(request, { params }) {
 }
 ```
 
-- Just add a button like below it will handle other things.
+- Add a button like the one below it will handle other things.
 
 ```typescript
 import {RegisterLink, LoginLink} from "@kinde-oss/kinde-auth-nextjs/server";
@@ -41,7 +42,7 @@ import {RegisterLink, LoginLink} from "@kinde-oss/kinde-auth-nextjs/server";
 
 ```
 
-- Here didn't have a `/sign-in` and `/sign-up` path instead of using the kinde API path so we defined this in a config file for redirect for developer friendly.
+- Here, we didn't have a `/sign-in` and `/sign-up` path instead of using the kinde API path so we defined this in a config file for redirect for developer friendly.
 
 ```typescript
 /** @type {import('next').NextConfig} */
@@ -93,7 +94,7 @@ const Providers = ({ children }: PropsWithChildren) => {
 export default Providers;
 ```
 
-- create folder call trpc and add configuration.
+- create a folder called trpc and add configuration.
 
 - trpc gives protected API using middleware below is an example of adding it
 
@@ -104,7 +105,7 @@ import { TRPCError, initTRPC } from "@trpc/server";
 const t = initTRPC.create();
 const middleware = t.middleware;
 
-// This middle used for query data for authenticated user
+// This middle is used for query data for authenticated user
 const isAuth = middleware(async (opts) => {
   const { getUser } = getKindeServerSession();
 
@@ -126,7 +127,7 @@ export const publicProcedure = t.procedure;
 export const privateProcedure = t.procedure.use(isAuth);
 ```
 
-- below like you can use public queries and protected queries.
+- below you can use public queries and protected queries.
 
 ```typescript
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -173,7 +174,7 @@ export type AppRouter = typeof appRouter;
 - every query and mutation added to separate file maintainable code
 
 > [!IMPORTANT]
-> please check the version of trpc on documentation.
+> Please check the version of trpc on the documentation.
 
 - the mutation has some properties called onsucess,onerror etc these are very useful when controlling the page functionality.
 
@@ -194,14 +195,14 @@ const { mutate: deleteFile } = trpc.deleteFile.useMutation({
 });
 ```
 
-- cool thing about trpc mutation it has some properties like `retry` and `retryDelay` this is a very helpful thing if you want to run your mutation or query until get success.
+- The cool thing about trpc mutation it has some properties like `retry` and `retryDelay` This is a very helpful thing if you want to run your mutation or query until get success.
 
 ```typescript
 const { mutate: startPolling } = trpc.getFile.useMutation({
   onSuccess: (file) => {
     router.push(`/dashboard/${file.id}`);
   },
-  //NOTE:This is a good one for trpc if we want until rerun this api get success
+  //NOTE: This is a good one for trpc if we want to rerun this API get success
   retry: true,
   retryDelay: 500,
 });
@@ -211,7 +212,7 @@ const { mutate: startPolling } = trpc.getFile.useMutation({
 
 - initial setup for prisma using `npx prisma init` This will create a basic setup for your project.
 
-  - create Prisma folder
+  - create a Prisma folder
   - add database URL to env.
 
 - here I used [neon.tech](https://neon.tech/) for Database.
@@ -325,7 +326,7 @@ const UploadDropzone = () => {
 ## React Pdf
 
 - [react pdf](https://react-pdf.org/) is a great package showing pdf files.
-- also read this npm package [link]() because if this package wants some configuration in `next.config.js` for the run and also you want to import some CSS file like the below one,
+- also read this npm package [link]() because if this package wants some configuration in `next.config.js` for the run and also you want to import some CSS files like the below one,
 
 ```typescript
 /** @type {import('next').NextConfig} */
@@ -352,12 +353,12 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 ## React Resize Detector
 
-- [react-resize-detector](https://www.npmjs.com/package/react-resize-detector) is helps for width automatically increase or decrease in pdf view port check it in the code for better understanding.
+- [react-resize-detector](https://www.npmjs.com/package/react-resize-detector) helps for width automatically increase or decrease in the pdf viewport check it in the code for better understanding.
 
 ## React SimpleBar
 
--[react-simplebar](https://www.npmjs.com/package/simplebar-react) is package use for control the size of pdf container
--If you want to use this you must import css to layout.
+-[react-simplebar](https://www.npmjs.com/package/simplebar-react) is a package used to control the size of the pdf container
+-If you want to use this you must import CSS to layout.
 
 ```typescript
 import "simplebar-react/dist/simplebar.min.css";
@@ -382,7 +383,7 @@ import "simplebar-react/dist/simplebar.min.css";
 - [pinecone](https://www.pinecone.io/) is a Long-Term Memory for AI, this is a vector database.
 - A vector database is a type of database that indexes and stores vector embeddings for fast retrieval and similarity search, with capabilities like CRUD operations, metadata filtering, and horizontal scaling.
 
-- when you create a Pinecone account you get api key for Pinecone database access.
+- when you create a Pinecone account you get an API key for Pinecone database access.
 
 - you just create an instance for pinecone like below in enough for use it.
 
@@ -399,7 +400,7 @@ export const pinecone = new Pinecone({
 
 - [langchain](https://www.langchain.com/) is a framework for developing applications powered by language models.
 
-- also you want to install one dependency with langchain `pnpm install pdf-parse` .
+- also you want to install one dependency with langchain `pnpm install pdf-parse`.
 
 - this is a code you use PDF Loader and OpenAIEmbeddings from langchain,
 
@@ -414,21 +415,21 @@ const loader = new PDFLoader(blob);
 const pageLevelDocs = await loader.load();
 const pagesAmt = pageLevelDocs.length;
 
-// vectorized and index entire document
+// vectorized and indexed the entire document
 const pineconeIndex = pinecone.Index("quillpdfchatyt");
 
 const embeddings = new OpenAIEmbeddings({
   openAIApiKey: process.env.OPEN_AI_KEY,
 });
 
-// NOTE:the name space properties does not supported for free tier
+// NOTE: the namespace properties are not supported for free tier
 await PineconeStore.fromDocuments(pageLevelDocs, embeddings, {
   pineconeIndex,
   // namespace: createdFile.id,
 });
 ```
 
-- after asking a question we want to find a page for an answer,(this is in the api folder)
+- after asking a question we want to find a page for an answer,(this is in the API folder)
 
 ```typescript
 const embeddings = new OpenAIEmbeddings({
@@ -444,7 +445,7 @@ const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
 const results = await vectorStore.similaritySearch(message, 4);
 ```
 
-- after that you get vector data for that page we want to answer the question using ai so we pass our previous messages and vector for that page to `openai` to answer the following question. so in this purpose we want install some packages `pnpm install openai` for chat with ai and `pnpm install ai` for stream the chat.
+- after that, you get vector data for that page we want to answer the question using ai so we pass our previous messages and vector for that page to `openai` to answer the following question. so for this purpose, we want to install some packages `pnpm install openai` for chatting with ai and `pnpm install ai` for streaming the chat.
 
 ```typescript
 const results = await vectorStore.similaritySearch(message, 4);
@@ -537,7 +538,7 @@ useEffect(() => {
 ## Stripe
 
 - install the stripe package to use this feature and create a stripe account.
-- create a new product name called a pro plan for subscription.
+- create a new product name called a pro plan for a subscription.
 - Get the price ID from the stripe dashboard and create a checkout flow.
 
 ```typescript
@@ -623,7 +624,7 @@ export function constructMetadata({
       title,
       description,
       images: [image],
-      // put your twitter name its show when some share it this to twitter
+      //Put your Twitter name it shows when someone shares it on Twitter
       creator: "",
     },
     icons,
@@ -642,7 +643,7 @@ export function constructMetadata({
 ## CSS
 
 - grow - Use grow to allow a flex item to grow to fill any available space.
-- flex-[0.75] - this dynamic value like flex-1
-- place-items-center - to place grid items in the center of their grid areas on both axes.
+- flex-[0.75] - This dynamic value like flex-1
+- place-items-center - to place grid items in the centre of their grid areas on both axes.
 
 > Thanks for [Josh tried coding](https://www.youtube.com/@joshtriedcoding).
