@@ -41,6 +41,27 @@ import {RegisterLink, LoginLink} from "@kinde-oss/kinde-auth-nextjs/server";
 
 ```
 
+- Here didn't have a `/sign-in` and `/sign-up` path instead of using the kinde API path so we defined this in a config file for redirect for developer friendly.
+
+```typescript
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/sign-in",
+        destination: "/api/auth/login",
+        permanent: true,
+      },
+      {
+        source: "/sign-up",
+        destination: "/api/auth/register",
+        permanent: true,
+      },
+    ];
+  },
+```
+
 ## TRPC
 
 - [TRPC](https://trpc.io/docs/client/nextjs/setup) helps you add type-safe for the frontend and backend.
