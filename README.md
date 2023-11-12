@@ -400,7 +400,7 @@ export const pinecone = new Pinecone({
 
 - [langchain](https://www.langchain.com/) is a framework for developing applications powered by language models.
 
-- also you want to install one dependency with langchain `pnpm install pdf-parse`.
+- also, you want to install one dependency with langchain `pnpm install pdf-parse`.
 
 - this is a code you use PDF Loader and OpenAIEmbeddings from langchain,
 
@@ -644,6 +644,6 @@ export function constructMetadata({
 
 - grow - Use grow to allow a flex item to grow to fill any available space.
 - flex-[0.75] - This dynamic value like flex-1
-- place-items-center - to place grid items in the centre of their grid areas on both axes.
+- place-items-center - to place grid items in the center of their grid areas on both axes.
 
 > Thanks for [Josh tried coding](https://www.youtube.com/@joshtriedcoding).
