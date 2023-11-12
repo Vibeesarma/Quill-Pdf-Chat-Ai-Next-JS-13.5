@@ -95,7 +95,7 @@ export default Providers;
 
 - create folder call trpc and add configuration.
 
-- trpc gives protected API using middleware below is example of adding it
+- trpc gives protected API using middleware below is an example of adding it
 
 ```typescript
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -126,7 +126,7 @@ export const publicProcedure = t.procedure;
 export const privateProcedure = t.procedure.use(isAuth);
 ```
 
-- below like you can use public queires and protected queires
+- below like you can use public queries and protected queries.
 
 ```typescript
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -211,12 +211,12 @@ const { mutate: startPolling } = trpc.getFile.useMutation({
 
 - initial setup for prisma using `npx prisma init` This will create a basic setup for your project.
 
-  - create prisma folder
+  - create Prisma folder
   - add database URL to env.
 
 - here I used [neon.tech](https://neon.tech/) for Database.
 
-- Then add the database model to `schema.prisma` file,then run `npx prisma db push` command to sync your database and run `npx prisma generate` to add type data.
+- Then add the database model to `schema.prisma` file, then run `npx prisma db push` command to sync your database and run `npx prisma generate` to add type data.
 
 - Create a folder called db and add the Prisma db client.
 
@@ -241,7 +241,7 @@ export const db = prisma;
 
 ## React Drop Zone
 
--[react drop zone](https://react-dropzone.js.org/) is library use for file drop in easy to like below one.
+-[react drop zone](https://react-dropzone.js.org/) is a library used for file drop in easy to like below one.
 
 ```typescript
 const UploadDropzone = () => {
@@ -324,8 +324,8 @@ const UploadDropzone = () => {
 
 ## React Pdf
 
-- [react pdf](https://react-pdf.org/) is great package show pdf file.
-- also read this npm package [link]() because if this package is want some configuration in `next.config.js` for run and also you want to import some css file like below one,
+- [react pdf](https://react-pdf.org/) is a great package showing pdf files.
+- also read this npm package [link]() because if this package wants some configuration in `next.config.js` for the run and also you want to import some CSS file like the below one,
 
 ```typescript
 /** @type {import('next').NextConfig} */
